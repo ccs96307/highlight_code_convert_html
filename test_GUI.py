@@ -27,7 +27,24 @@ class MainWindow(QtWidgets.QMainWindow):
                          'class="si"': 'style="color: #ed9d13;"',
                          'class="mi"': 'style="color: #3677a9;"',
                          'class="ow"': 'style="color: #6ab825; font-weight: bold;"',
-                         'class="se"': 'style="color: #ed9d13;"'}
+                         'class="se"': 'style="color: #ed9d13;"',
+                         'class="c1"': 'style="color: #999999; font-style: italic;"',
+                         'class="nf"': 'style="color: #447fcf;"',
+                         }
+
+        self.kw_color = {}
+
+        # WTF
+        class_style = HtmlFormatter().get_style_defs('.highlight')
+        class_style = re.findall('.highlight (\.\w+) \{ (.+) \}', class_style)
+        for cs in class_style:
+            key = 'class="{}"'.format(cs[0][1:])
+            style = 'style="{};"'.format(cs[1])
+
+            self.kw_color[key] = style
+
+        for kc in self.kw_color:
+            print(kc, self.kw_color[kc])
 
         self.ui.pushButton.clicked.connect(self.convertEvent)
 
@@ -70,6 +87,8 @@ class MainWindow(QtWidgets.QMainWindow):
 
         for w in kw:
             print(w)
+
+        print('=' * 80)
 
         return results
 

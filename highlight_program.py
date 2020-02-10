@@ -23,6 +23,20 @@ class HighLight:
                  'class="ow"': 'style="color: #6ab825; font-weight: bold;"',
                  'class="se"': 'style="color: #ed9d13;"'}
 
+        self.kw_color = {}
+
+        # WTF
+        class_style = HtmlFormatter().get_style_defs('.highlight')
+        class_style = re.findall('.highlight (\.\w+) \{ (.+) \}', class_style)
+        for cs in class_style:
+            key = cs[0][1:]
+            style = 'style="{};"'.format(cs[1])
+
+            self.kw_color[key] = style
+
+        for kc in self.kw_color:
+            print(kc, self.kw_color[kc])
+
     def highlightEvent(self, code):
         lines = code.split('\n')
         results = ''
