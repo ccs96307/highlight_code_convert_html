@@ -15,6 +15,7 @@ class MainWindow(QtWidgets.QMainWindow):
         super(MainWindow, self).__init__()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
+        self.setWindowTitle('Code-to-Html')
 
         # StyleSheet
         self.setStyleSheet('''
@@ -85,7 +86,6 @@ class MainWindow(QtWidgets.QMainWindow):
             for w in re.findall('class="\w+">', new_line):
                 kw.add(w)
 
-        # results = '<div style="overflow: auto; background: #202020; border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;">\n<pre style="margin: 0; line-height: 125%; white-space:nowrap">\n' + results + '</pre></div>'
         results = '<div style="overflow: auto; background: {}; border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;">\n<pre style="margin: 0; line-height: 125%; white-space:nowrap">\n'.format(self.background) + results + '</pre></div>'
 
         return results
