@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home Page</title>
+</head>
+<body style="background-color: antiquewhite">
+    <form method="post" action="/">
+        <textarea rows="10" cols="30" name="source code">{{ html }}</textarea>
+        <input type="submit" value="Submit" name="ok"/>
+    </form>
+
+    <div style="align-items: center"><textarea rows="10" cols="30" name="html">{{ html }}</textarea></div>
+
+    <div style="align-items: center">
+        <iframe frameborder='0'
+                noresize='noresize'
+                style='position: absolute; background: transparent; width: 100%; height:100%;'
+                srcdoc="{{ iframe }}"
+                frameborder="0">
+        </iframe>
+    </div>
+</body>
+</html>
