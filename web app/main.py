@@ -10,7 +10,6 @@ highlight = Highlight()
 print(highlight)
 
 
-
 @app.route('/')
 def index():
     return render_template('code2html.html')
