@@ -427,4 +427,6 @@ Zig'''
                   '<pre style="margin: 0; line-height: 125%;' \
                   ' white-space:nowrap">\n'.format(background) + results + '</pre></div>'
 
+        print(results)
+
         return results
