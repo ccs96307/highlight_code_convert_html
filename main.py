@@ -1,16 +1,18 @@
 # -*- coding: utf-8 -*-
 import sys
-from PyQt5 import QtWidgets
+from PyQt5.QtWidgets import *
+from PyQt5.QtGui import *
 from UI import Ui_MainWindow
 from highlight import Highlight
 
 
-class MainWindow(QtWidgets.QMainWindow):
+class MainWindow(QMainWindow):
     def __init__(self):
         super(MainWindow, self).__init__()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
         self.setWindowTitle('Code-to-Html')
+        self.setWindowIcon(QIcon('pic/icon.png'))
 
         # StyleSheet
         self.setStyleSheet('''
@@ -33,12 +35,16 @@ class MainWindow(QtWidgets.QMainWindow):
         # Button
         self.ui.pushButton.clicked.connect(self.convertEvent)
 
+    # Convert the input code to html text
     def convertEvent(self):
         code = self.ui.plainTextEdit.toPlainText()
         code = self.highlightEvent(code)
         self.ui.plainTextEdit_2.setPlainText(code)
+        self.ui.plainTextEdit_2.selectAll()
+        self.ui.plainTextEdit_2.copy()
         self.ui.textBrowser.setHtml(code)
 
+    # Using highlight class to highlight the code
     def highlightEvent(self, code):
         lexer = self.ui.comboBox.currentText()
         style = self.ui.comboBox_2.currentText()
@@ -48,7 +54,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
 
 if __name__ == '__main__':
-    app = QtWidgets.QApplication([])
+    app = QApplication([])
     window = MainWindow()
     window.show()
     sys.exit(app.exec_())
