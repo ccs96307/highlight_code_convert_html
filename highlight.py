@@ -35,7 +35,7 @@ class Highlight:
 
         # Highlight the code
         lines = code.split('\n')
-        results = '<!-- More information can refer: clay-atlas.com -->'
+        results = '<!-- More information can refer: https://clay-atlas.com/blog/2020/03/05/python-english-tutorial-package-pygments-highlight-code/ -->'
         kw = set()
 
         for n in range(len(lines)):
