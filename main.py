@@ -1,4 +1,7 @@
-# -*- coding: utf-8 -*-
+# coding: utf-8
+"""
+This is a test case
+"""
 import sys
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
@@ -44,6 +47,10 @@ class MainWindow(QMainWindow):
         self.ui.plainTextEdit_2.copy()
         self.ui.textBrowser.setHtml(code)
 
+        # Fresh
+        self.ui.plainTextEdit_2.repaint()
+        self.ui.textBrowser.repaint()
+
     # Using highlight class to highlight the code
     def highlightEvent(self, code):
         lexer = self.ui.comboBox.currentText()
@@ -55,6 +62,7 @@ class MainWindow(QMainWindow):
 
 if __name__ == '__main__':
     app = QApplication([])
+    app.setWindowIcon(QIcon('pic/icon.png'))
     window = MainWindow()
     window.show()
     sys.exit(app.exec_())
