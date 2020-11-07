@@ -25,8 +25,10 @@ class Highlight:
         # Highlight the code
         results = highlight(code, lexer, formatter)
 
+        print(results)
+
         # Finished
-        class_style = re.findall('body \.(..) { (.+) }', results)
+        class_style = re.findall('body \.(.*) { (.+) }', results)
         highlight_code = re.findall('<div class="highlight">(<pre>.*</pre></div>)', results, re.DOTALL)[0]
         background_color = re.findall('body \{ background: (.+); \}', results)
 
@@ -53,8 +55,8 @@ class Highlight:
 
 
 if __name__ == '__main__':
-    code = 'from torch import tensor\nprint("Hello World ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")'
-    lang = 'Python'
+    code = 'while (i <= 100) { i++; }'
+    lang = 'C++'
     style = 'default'
     hl = Highlight()
 
