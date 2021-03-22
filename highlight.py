@@ -42,7 +42,7 @@ class Highlight:
             color_pattern = '<span style="{}"'.format(item[1])
             highlight_code = highlight_code.replace(class_pattern, color_pattern)
 
-        highlight_code = re.sub('<pre><span></span>', '<pre style="margin: 0; line-height: 150%; font-size:15px;"><span></span>', highlight_code)
+        highlight_code = re.sub('<pre><span></span>', '<pre style="margin: 0; line-height: 125%; font-size:15px;"><span></span>', highlight_code)
 
         results = \
             '<!-- More information can refer: https://clay-atlas.com/blog/2020/03/05/python-english-tutorial-package-pygments-highlight-code/ -->' \
