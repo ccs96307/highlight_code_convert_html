@@ -15,7 +15,7 @@ class Highlight:
     def return_all_styles(self):
         return self.all_styles
 
-    def highlightEvent(self, code, style, lang):
+    def highlightEvent(self, code, style, lang, show_copy_button):
         # Build the style and lexer object
         lang = self.all_langs[lang]
         style = styles.get_style_by_name(style)
@@ -51,6 +51,23 @@ class Highlight:
             'border-width:.1em .1em .1em .8em; ' \
             'padding:.2em .5em;">\n    '.format(background_color) + highlight_code
 
+        # Add button
+        if show_copy_button:
+            results += """
+<textarea readonly id="copyText" style="position:absolute;left:-9999px">""" +\
+        code +\
+        """</textarea>
+    <button type="button" onclick="copyEvent('copyText')" style="float: right">COPY</button>
+
+<script>
+    function copyEvent(id)
+    {
+        var str = document.getElementById(id);
+        window.getSelection().selectAllChildren(str);
+        document.execCommand("Copy")
+    }
+</script>"""
+
         return results
 
 
@@ -60,5 +77,5 @@ if __name__ == '__main__':
     style = 'default'
     hl = Highlight()
 
-    results = hl.highlightEvent(code, style, lang)
+    results = hl.highlightEvent(code, style, lang, False)
     open('test.html', 'w').write(results)

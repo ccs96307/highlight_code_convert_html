@@ -42,10 +42,10 @@ class MainWindow(QMainWindow):
     def convertEvent(self):
         code = self.ui.plainTextEdit.toPlainText()
         code = self.highlightEvent(code)
+        self.ui.textBrowser.setHtml(code)
         self.ui.plainTextEdit_2.setPlainText(code)
         self.ui.plainTextEdit_2.selectAll()
         self.ui.plainTextEdit_2.copy()
-        self.ui.textBrowser.setHtml(code)
 
         # Fresh
         self.ui.plainTextEdit_2.repaint()
@@ -55,7 +55,7 @@ class MainWindow(QMainWindow):
     def highlightEvent(self, code):
         lexer = self.ui.comboBox.currentText()
         style = self.ui.comboBox_2.currentText()
-        results = self.highlight.highlightEvent(code, style, lexer)
+        results = self.highlight.highlightEvent(code, style, lexer, self.ui.checkBox.isChecked())
 
         return results
 
