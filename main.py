@@ -2,6 +2,7 @@
 """
 This is a test case
 """
+import re
 import sys
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
@@ -42,7 +43,7 @@ class MainWindow(QMainWindow):
     def convertEvent(self):
         code = self.ui.plainTextEdit.toPlainText()
         code = self.highlightEvent(code)
-        self.ui.textBrowser.setHtml(code)
+        self.ui.textBrowser.setHtml(re.findall("(.*)<textarea readonly id=", code, re.DOTALL)[0])
         self.ui.plainTextEdit_2.setPlainText(code)
         self.ui.plainTextEdit_2.selectAll()
         self.ui.plainTextEdit_2.copy()

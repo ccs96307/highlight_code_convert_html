@@ -1,4 +1,5 @@
 # coding: utf-8
+import random
 import re
 from pygments import highlight, lexers, styles
 from pygments.formatters.html import HtmlFormatter
@@ -42,7 +43,9 @@ class Highlight:
             color_pattern = '<span style="{}"'.format(item[1])
             highlight_code = highlight_code.replace(class_pattern, color_pattern)
 
-        highlight_code = re.sub('<pre><span></span>', '<pre style="margin: 0; line-height: 125%; font-size:15px;"><span></span>', highlight_code)
+        highlight_code = re.sub('<pre><span></span>', '<pre class="ccode" style="margin: 0; line-height: 125%; font-size:15px;"><span></span>', highlight_code)
+
+        print(highlight_code)
 
         results = \
             '<!-- More information can refer: https://clay-atlas.com/blog/2020/03/05/python-english-tutorial-package-pygments-highlight-code/ -->' \
@@ -53,19 +56,59 @@ class Highlight:
 
         # Add button
         if show_copy_button:
+            # Random ID
+            random_id = "".join([str(random.randint(0, 9)) for _ in range(8)])
+
             results += """
-<textarea readonly id="copyText" style="position:absolute;left:-9999px">""" +\
+<textarea readonly id="{}" style="position:absolute;left:-9999px">""".format(random_id) +\
         code +\
         """</textarea>
-    <button type="button" onclick="copyEvent('copyText')" style="float: right">COPY</button>
+    <button type="button" onclick="copyEvent('""" + random_id + """')" style="float: right">COPY</button>
 
 <script>
-    function copyEvent(id)
-    {
-        var str = document.getElementById(id);
-        window.getSelection().selectAllChildren(str);
-        document.execCommand("Copy")
+function copyEvent(id) {
+  let textarea;
+  let result;
+
+  try {
+    textarea = document.createElement('textarea');
+    textarea.setAttribute('readonly', true);
+    textarea.setAttribute('contenteditable', true);
+    textarea.style.position = 'fixed'; // prevent scroll from jumping to the bottom when focus is set.
+    textarea.value = document.getElementById(id).textContent;
+
+    document.body.appendChild(textarea);
+
+    textarea.focus();
+    textarea.select();
+
+    const range = document.createRange();
+    range.selectNodeContents(textarea);
+
+    const sel = window.getSelection();
+    sel.removeAllRanges();
+    sel.addRange(range);
+
+    textarea.setSelectionRange(0, textarea.value.length);
+    result = document.execCommand('copy');
+  } catch (err) {
+    console.error(err);
+    result = null;
+  } finally {
+    document.body.removeChild(textarea);
+  }
+
+  // manual copy fallback using prompt
+  if (!result) {
+    const isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
+    const copyHotkey = isMac ? '⌘C' : 'CTRL+C';
+    result = prompt(`Press ${copyHotkey}`, string); // eslint-disable-line no-alert
+    if (!result) {
+      return false;
     }
+  }
+  return true;
+}
 </script>"""
 
         return results
@@ -77,5 +120,5 @@ if __name__ == '__main__':
     style = 'default'
     hl = Highlight()
 
-    results = hl.highlightEvent(code, style, lang, False)
+    results = hl.highlightEvent(code, style, lang, True)
     open('test.html', 'w').write(results)
